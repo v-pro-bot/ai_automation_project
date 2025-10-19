@@ -1,0 +1,144 @@
+/* ===== GENERAL ===== */
+body {
+  font-family: 'Segoe UI', Roboto, sans-serif;
+  background-color: #f4f5f7;
+  color: #222;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2 {
+  text-align: center;
+  margin-top: 20px;
+  color: #333;
+}
+
+a {
+  color: #007bff;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+/* ===== CONTAINER ===== */
+.container {
+  max-width: 800px;
+  margin: 30px auto;
+  background: white;
+  border-radius: 12px;
+  padding: 25px 30px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* ===== BUTTONS ===== */
+button, .btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  font-weight: 500;
+}
+button:hover, .btn:hover {
+  background-color: #0056b3;
+}
+
+/* ===== FLASH MESSAGES ===== */
+.flash {
+  padding: 12px 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  font-size: 15px;
+}
+.flash.success {
+  background-color: #d1e7dd;
+  color: #0f5132;
+  border-left: 5px solid #198754;
+}
+.flash.danger {
+  background-color: #f8d7da;
+  color: #842029;
+  border-left: 5px solid #dc3545;
+}
+.flash.info {
+  background-color: #cff4fc;
+  color: #055160;
+  border-left: 5px solid #0dcaf0;
+}
+
+/* ===== LISTS ===== */
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  background: #f9f9f9;
+  margin: 8px 0;
+  padding: 12px 14px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #e1e1e1;
+  transition: transform 0.1s ease-in-out;
+}
+li:hover {
+  transform: translateY(-2px);
+  background: #f0f8ff;
+}
+
+/* ===== UPLOAD FORM ===== */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 25px;
+}
+
+input[type="file"],
+input[type="email"],
+input[type="text"] {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+}
+
+input[type="file"]:focus,
+input[type="email"]:focus,
+input[type="text"]:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 3px rgba(0, 123, 255, 0.4);
+}
+
+/* ===== NAV LINKS ===== */
+.navbar {
+  background-color: #222;
+  color: white;
+  padding: 12px 25px;
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+}
+
+.navbar a {
+  color: white;
+  font-weight: 500;
+}
+.navbar a:hover {
+  color: #ffdd57;
+}
+
+/* ===== FOOTER ===== */
+footer {
+  text-align: center;
+  margin-top: 40px;
+  padding: 15px;
+  color: #777;
+  font-size: 14px;
+}

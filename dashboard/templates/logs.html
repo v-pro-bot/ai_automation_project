@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Logs</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+  <div class="navbar">
+    <a href="{{ url_for('index') }}">Home</a>
+    <a href="{{ url_for('upload') }}">Upload</a>
+    <a href="{{ url_for('logs') }}">Logs</a>
+  </div>
+
+  <div class="container">
+    <h1>🧾 System Logs</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, msg in messages %}
+          <div class="flash {{ category }}">{{ msg }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    {% if logs %}
+      <ul>
+        {% for entry in logs %}
+          <li>{{ entry }}</li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p style="text-align:center; color:#666;">No logs to display.</p>
+    {% endif %}
+  </div>
+
+  <footer>
+    &copy; {{ current_year }} Data Dashboard | Built with Flask
+  </footer>
+
+</body>
+</html>
