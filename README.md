@@ -7,7 +7,7 @@ It allows users to automate workflows, generate smart summaries, and log actions
 
 This project demonstrates how AI + automation + clean backend design can create systems that think and work for you.
 
-🧠 Features
+Features :
 
 🤖 Gemini AI Integration — Automatically generate intelligent text, summaries, or task decisions.
 
