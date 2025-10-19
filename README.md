@@ -1,6 +1,6 @@
 🚀 AI Automation Dashboard
-📌 Overview
 
+📌 Overview
 AI Automation Dashboard is a Flask-based system that connects Gemini AI, Google Sheets, and custom automation scripts to streamline daily tasks.
 It allows users to automate workflows, generate smart summaries, and log actions directly to Google Sheets — all through a simple web dashboard.
 
