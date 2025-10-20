@@ -23,9 +23,17 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(REPORTS_FOLDER, exist_ok=True)
 os.makedirs(LOGS_FOLDER, exist_ok=True)
 
-# Load config once
-with open(os.path.join(BASE_DIR, "config.json")) as f:
-    CONFIG = json.load(f)
+# Load sensitive values from environment variables (set in Render Dashboard)
+CONFIG = {
+    "email_from": os.getenv("EMAIL_FROM"),
+    "app_password": os.getenv("APP_PASSWORD"),
+    "gemini_api_key": os.getenv("GEMINI_API_KEY"),
+}
+
+# Optional safety check (log if missing)
+missing = [k for k, v in CONFIG.items() if not v]
+if missing:
+    LOG.warning(f"⚠️ Missing environment variables: {', '.join(missing)}")
 
 
 @app.route("/")
