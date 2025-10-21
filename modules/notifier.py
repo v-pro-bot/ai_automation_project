@@ -1,35 +1,47 @@
-import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-from email.mime.application import MIMEApplication
 import os
+import sib_api_v3_sdk
+from sib_api_v3_sdk.rest import ApiException
 
-def send_email(to_email, subject, body, attachments=None):
-    msg = MIMEMultipart()
-    msg["From"] = os.getenv("EMAIL_FROM")
-    msg["To"] = to_email
-    msg["Subject"] = subject
-
-    msg.attach(MIMEText(body, "plain"))
-
-    if attachments:
-        for file_path in attachments:
-            with open(file_path, "rb") as f:
-                part = MIMEApplication(f.read(), Name=file_path)
-                part['Content-Disposition'] = f'attachment; filename="{os.path.basename(file_path)}"'
-                msg.attach(part)
-
+def send_email(to_email, subject, body="See attached report.", attachments=None):
+    """
+    Sends an email using the Brevo API (Sendinblue).
+    """
     try:
-        smtp_server = "smtp-relay.brevo.com"
-        smtp_port = 587
-        smtp_user = os.getenv("EMAIL_FROM")
-        smtp_pass = os.getenv("BREVO_SMTP_KEY")
+        # Configure Brevo client
+        configuration = sib_api_v3_sdk.Configuration()
+        configuration.api_key['api-key'] = os.getenv("BREVO_API_KEY")
 
-        with smtplib.SMTP(smtp_server, smtp_port, timeout=30) as smtp:
-            smtp.starttls()
-            smtp.login(smtp_user, smtp_pass)
-            smtp.send_message(msg)
+        api_instance = sib_api_v3_sdk.TransactionalEmailsApi(
+            sib_api_v3_sdk.ApiClient(configuration)
+        )
 
+        # Build the email
+        email = sib_api_v3_sdk.SendSmtpEmail(
+            sender={"name": "Automation Dashboard", "email": os.getenv("EMAIL_FROM")},
+            to=[{"email": to_email}],
+            subject=subject,
+            html_content=f"<p>{body}</p>"
+        )
+
+        # Attach files if present
+        if attachments:
+            email.attachment = []
+            for path in attachments:
+                with open(path, "rb") as f:
+                    file_data = f.read()
+                email.attachment.append({
+                    "name": os.path.basename(path),
+                    "content": file_data.encode("base64") if hasattr(file_data, "encode") else file_data
+                })
+
+        # Send the email
+        api_instance.send_transac_email(email)
+        print(f"📨 Email sent successfully to {to_email}")
         return True, "Email sent successfully!"
+
+    except ApiException as e:
+        print(f"❌ Brevo API error: {e}")
+        return False, f"Brevo API error: {e}"
     except Exception as e:
-        return False, f"Error sending email: {str(e)}"
+        print(f"❌ General error sending email: {e}")
+        return False, str(e)
