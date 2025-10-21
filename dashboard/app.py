@@ -35,7 +35,6 @@ missing = [k for k, v in CONFIG.items() if not v]
 if missing:
     LOG.warning(f"⚠️ Missing environment variables: {', '.join(missing)}")
 
-
 @app.route("/")
 def index():
     # Show uploaded CSVs and generated PDFs
@@ -72,12 +71,11 @@ def upload():
                 # --- Email Sending ---
                 # Expecting send_email to return (success_bool, error_message)
                 send_success, send_message = send_email(
+                    to_email="recipient@example.com",
                     subject=f"Report for {client_name}",
-                    to_email=client_email,
-                    from_email=CONFIG["email_from"],
-                    app_password=CONFIG["app_password"],
                     attachments=[pdf_path]
                 )
+
                 
                 # Check the return value of send_email
                 if not send_success:
