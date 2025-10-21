@@ -69,8 +69,13 @@ def upload():
                 LOG.info(f"PDF report created at: {pdf_path}")
 
                 # --- Email Sending ---
+                # Get client name and email from the form
+                client_name = request.form.get("client_name")
+                client_email = request.form.get("client_email")
+
+                # Send the generated report via Brevo
                 send_success, send_message = send_email(
-                    to_email="recipient@example.com",
+                    to_email=client_email,
                     subject=f"Report for {client_name}",
                     attachments=[pdf_path]
                 )
