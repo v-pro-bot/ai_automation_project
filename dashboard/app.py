@@ -69,14 +69,12 @@ def upload():
                 LOG.info(f"PDF report created at: {pdf_path}")
 
                 # --- Email Sending ---
-                # Expecting send_email to return (success_bool, error_message)
                 send_success, send_message = send_email(
                     to_email="recipient@example.com",
                     subject=f"Report for {client_name}",
                     attachments=[pdf_path]
                 )
 
-                
                 # Check the return value of send_email
                 if not send_success:
                     # Manually raise an exception if the email function failed silently
