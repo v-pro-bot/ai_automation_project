@@ -41,6 +41,7 @@ reportlab==4.4.4
 requests==2.32.5
 requests-oauthlib==2.0.0
 rsa==4.9.1
+sib-api-v3-sdk
 six==1.17.0
 tqdm==4.67.1
 typing-inspection==0.4.2
@@ -49,4 +50,3 @@ tzdata==2025.2
 uritemplate==4.2.0
 urllib3==2.5.0
 Werkzeug==3.1.3
-
