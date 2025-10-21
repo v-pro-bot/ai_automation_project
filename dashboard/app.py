@@ -77,6 +77,7 @@ def upload():
                 send_success, send_message = send_email(
                     to_email=client_email,
                     subject=f"Report for {client_name}",
+                    body="Here’s your automated performance report.",
                     attachments=[pdf_path]
                 )
 
