@@ -6,7 +6,7 @@ from sib_api_v3_sdk.rest import ApiException
 
 def send_email(to_email, subject, body="See attached report.", attachments=None):
     """
-    Sends an email with optional attachments using the Brevo (Sendinblue) API.
+    Sends an email with optional attachments using Brevo (Sendinblue) API.
     """
 
     try:
@@ -18,7 +18,7 @@ def send_email(to_email, subject, body="See attached report.", attachments=None)
             sib_api_v3_sdk.ApiClient(configuration)
         )
 
-        # --- Build the email ---
+        # --- Build base email ---
         email_data = {
             "sender": {
                 "name": "Automation Dashboard",
@@ -29,26 +29,25 @@ def send_email(to_email, subject, body="See attached report.", attachments=None)
             "html_content": f"<p>{body}</p>",
         }
 
-        # --- Attach files (PDFs, CSVs, etc.) ---
+        # --- Attach PDF files correctly (Base64-encoded text) ---
         if attachments:
             email_data["attachment"] = []
             for path in attachments:
                 try:
                     with open(path, "rb") as file:
-                        file_bytes = file.read()
-                        encoded = base64.b64encode(file_bytes).decode("utf-8")
-                    email_data["attachment"].append({
-                        "name": os.path.basename(path),
-                        "content": encoded
-                    })
+                        encoded_content = base64.b64encode(file.read()).decode("utf-8")
+                        email_data["attachment"].append({
+                            "name": os.path.basename(path),
+                            "content": encoded_content
+                        })
                 except Exception as e:
-                    print(f"⚠️ Could not attach {path}: {e}")
+                    print(f"⚠️ Could not attach file {path}: {e}")
 
-        # --- Send the email ---
+        # --- Send via Brevo ---
         email = sib_api_v3_sdk.SendSmtpEmail(**email_data)
         api_instance.send_transac_email(email)
 
-        print(f"📨 Email with attachment sent to {to_email}")
+        print(f"📨 Email with attachment sent successfully to {to_email}")
         return True, "Email sent successfully with attachment!"
 
     except ApiException as e:
