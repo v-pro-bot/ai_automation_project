@@ -26,7 +26,6 @@ os.makedirs(LOGS_FOLDER, exist_ok=True)
 # Load sensitive values from environment variables (set in Render Dashboard)
 CONFIG = {
     "email_from": os.getenv("EMAIL_FROM"),
-    "app_password": os.getenv("APP_PASSWORD"),
     "gemini_api_key": os.getenv("GEMINI_API_KEY"),
 }
 
